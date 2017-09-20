@@ -30,6 +30,7 @@ betting_list = {1:"Red",2:"Green",3:"Black", 4:"Straight", 5:"Column", 6:"Even",
 def roll_ball():
     '''returns a random number between 0 and 37'''
     landed_num = math.floor(random.random() * 38)
+    print(landed_num)
     return landed_num
 
 def check_results(ball_pos,total_bets):
@@ -37,9 +38,9 @@ def check_results(ball_pos,total_bets):
     bet_number to number_rolled.'''
     print('..')
     for bet in total_bets:
-        print(bet.bet_numbers)
-def payout():
-    '''returns total amount won or lost by user based on results of roll. '''
+        if ball_pos in bet.bet_numbers:
+            print("You won {} at {}".format(bet.name,ball_pos))
+
 def update_bank(amount):
     bank_account -= amount
     
@@ -76,9 +77,9 @@ def play_game():
             column = int(input("Which column would you like to choose, 1...3? "))
             bet = Bet(betting_list[menu_option],col_list(column))
         elif(menu_option == 6):
-            bet = Bet(betting_list[menu_option], [range(1,37,2)] ) 
+            bet = Bet(betting_list[menu_option], list(range(2,37,2)) ) 
         elif(menu_option == 7):
-            bet = Bet(betting_list[menu_option], [range(0,37,2)] )
+            bet = Bet(betting_list[menu_option], list(range(1,37,2)) )
         elif(menu_option == 8):
             dozen_num = int(input("(1) 1-12 (2) 13-24 (3) 25-36"))
             bet = Bet(betting_list[menu_option], range(1,13)+12*(dozen_num-1) )
@@ -86,7 +87,7 @@ def play_game():
             two_cols = int(input("Choose a colum from 1-11 and second will follow"))
             bet = Bet(betting_list[menu_option], board[two_cols]+board[two_cols+1])
         elif(menu_option == 0):
-            check_results(roll_ball,total_bets)
+            check_results(roll_ball(),total_bets)
             break
             
         total_bets.append(bet)
